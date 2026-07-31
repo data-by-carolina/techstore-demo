@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Tu tienda de tecnología</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+        header { background: #1a73e8; color: white; padding: 1rem 2rem; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 2rem; }
+        .hero { background: linear-gradient(135deg, #1a73e8, #4285f4); color: white; padding: 4rem 2rem; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; margin-bottom: 2rem; }
+        .btn { background: #ff6d00; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+        .products { max-width: 1200px; margin: 3rem auto; padding: 0 2rem; }
+        .products h2 { text-align: center; margin-bottom: 2rem; color: #333; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .product-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+        .product-card h3 { color: #333; margin-bottom: 0.5rem; }
+        .product-card .price { color: #1a73e8; font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; }
+        .product-card button { width: 100%; padding: 0.8rem; background: #1a73e8; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .product-card button:hover { background: #1557b0; }
+        .product-card a { display: block; text-align: center; margin-top: 0.5rem; color: #666; text-decoration: none; }
+        footer { background: #333; color: white; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .cart-count { background: #ff6d00; color: white; border-radius: 50%; padding: 0.2rem 0.6rem; font-size: 0.8rem; margin-left: 0.5rem; }
+    </style>
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <header>
+        <nav>
+            <div class="logo">TechStore</div>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="#productos">Productos</a>
+                <a href="contacto.html">Contacto</a>
+                <a href="#" onclick="showCart()">Carrito <span class="cart-count" id="cartCount">0</span></a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>La mejor tecnología al mejor precio</h1>
+        <p>Descubre nuestra selección de productos premium</p>
+        <button class="btn" onclick="scrollToProducts()">Ver productos</button>
+    </section>
+
+    <section class="products" id="productos">
+        <h2>Productos Destacados</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400" alt="Smartphone Pro">
+                <h3>Smartphone Pro X</h3>
+                <p>Pantalla OLED 6.7", 256GB, 5G</p>
+                <div class="price">$899</div>
+                <button onclick="addToCart('smartphone-pro-x', 'Smartphone Pro X', 899)">Agregar al carrito</button>
+                <a href="producto.html?id=smartphone-pro-x">Ver detalles →</a>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400" alt="Laptop Ultra">
+                <h3>Laptop Ultra Book</h3>
+                <p>Intel i7, 16GB RAM, SSD 512GB</p>
+                <div class="price">$1,299</div>
+                <button onclick="addToCart('laptop-ultra', 'Laptop Ultra Book', 1299)">Agregar al carrito</button>
+                <a href="producto.html?id=laptop-ultra">Ver detalles →</a>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" alt="Auriculares Premium">
+                <h3>Auriculares Premium</h3>
+                <p>Cancelación de ruido, 30h batería</p>
+                <div class="price">$249</div>
+                <button onclick="addToCart('auriculares-premium', 'Auriculares Premium', 249)">Agregar al carrito</button>
+                <a href="producto.html?id=auriculares-premium">Ver detalles →</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>TechStore Demo - Para práctica de Analytics</p>
+    </footer>
+
+    <script>
+        // Data Layer inicial
+        window.dataLayer = window.dataLayer || [];
+        
+        // Evento: page_view con datos de la página
+        dataLayer.push({
+            event: 'page_view',
+            page_type: 'home',
+            page_title: document.title,
+            page_location: window.location.href
+        });
+
+        // Scroll tracking
+        let scrollTracked = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTracked && window.scrollY > 500) {
+                scrollTracked = true;
+                dataLayer.push({
+                    event: 'scroll',
+                    scroll_depth: '50%'
+                });
+            }
+        });
+
+        // Función: Agregar al carrito
+        function addToCart(productId, productName, price) {
+            dataLayer.push({
+                event: 'add_to_cart',
+                ecommerce: {
+                    items: [{
+                        item_id: productId,
+                        item_name: productName,
+                        price: price,
+                        quantity: 1
+                    }],
+                    value: price,
+                    currency: 'USD'
+                }
+            });
+            
+            // Actualizar contador visual
+            let count = parseInt(document.getElementById('cartCount').textContent);
+            document.getElementById('cartCount').textContent = count + 1;
+            
+            alert(productName + ' agregado al carrito!');
+        }
+
+        // Función: Scroll a productos
+        function scrollToProducts() {
+            dataLayer.push({
+                event: 'cta_click',
+                cta_name: 'ver_productos',
+                cta_location: 'hero'
+            });
+            document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Función: Mostrar carrito
+        function showCart() {
+            dataLayer.push({
+                event: 'view_cart',
+                cart_items: parseInt(document.getElementById('cartCount').textContent)
+            });
+            alert('Carrito: ' + document.getElementById('cartCount').textContent + ' items');
+        }
+    </script>
+</body>
+</html>

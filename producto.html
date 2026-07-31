@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto - TechStore</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+        header { background: #1a73e8; color: white; padding: 1rem 2rem; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 2rem; }
+        .product-detail { max-width: 1000px; margin: 3rem auto; padding: 0 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .product-image img { width: 100%; border-radius: 12px; }
+        .product-info h1 { color: #333; margin-bottom: 1rem; }
+        .product-info .price { color: #1a73e8; font-size: 2rem; font-weight: bold; margin-bottom: 1rem; }
+        .product-info p { color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
+        .btn-primary { background: #ff6d00; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; width: 100%; margin-bottom: 1rem; }
+        .btn-secondary { background: white; color: #1a73e8; padding: 1rem 2rem; border: 2px solid #1a73e8; border-radius: 8px; font-size: 1rem; cursor: pointer; width: 100%; }
+        .specs { margin-top: 2rem; }
+        .specs h3 { margin-bottom: 1rem; color: #333; }
+        .specs ul { list-style: none; }
+        .specs li { padding: 0.5rem 0; border-bottom: 1px solid #eee; color: #666; }
+        footer { background: #333; color: white; text-align: center; padding: 2rem; margin-top: 3rem; }
+        @media (max-width: 768px) { .product-detail { grid-template-columns: 1fr; } }
+    </style>
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+    </script>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <header>
+        <nav>
+            <div class="logo">TechStore</div>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="index.html#productos">Productos</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="product-detail" id="productDetail">
+        <!-- Se llena dinámicamente -->
+    </section>
+
+    <footer>
+        <p>TechStore Demo - Para práctica de Analytics</p>
+    </footer>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        
+        const products = {
+            'smartphone-pro-x': {
+                name: 'Smartphone Pro X',
+                price: 899,
+                image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600',
+                description: 'El Smartphone Pro X redefine la experiencia móvil con su pantalla OLED de 6.7 pulgadas, procesador de última generación y conectividad 5G ultrarrápida.',
+                specs: ['Pantalla OLED 6.7" 120Hz', 'Procesador Snapdragon 8 Gen 3', '256GB almacenamiento', '12GB RAM', 'Cámara triple 50MP', 'Batería 5000mAh', '5G + WiFi 7']
+            },
+            'laptop-ultra': {
+                name: 'Laptop Ultra Book',
+                price: 1299,
+                image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600',
+                description: 'Potencia y portabilidad en perfecto equilibrio. La Laptop Ultra Book está diseñada para profesionales que necesitan rendimiento sin comprometer la movilidad.',
+                specs: ['Intel Core i7-13700H', '16GB DDR5 RAM', 'SSD NVMe 512GB', 'Pantalla 14" 2.8K OLED', 'Gráficos Intel Iris Xe', 'Batería 12 horas', 'Peso 1.2kg']
+            },
+            'auriculares-premium': {
+                name: 'Auriculares Premium',
+                price: 249,
+                image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600',
+                description: 'Sumérgete en un sonido cristalino con cancelación activa de ruido. Diseño ergonómico para sesiones de escucha prolongadas.',
+                specs: ['Cancelación activa de ruido', 'Drivers de 40mm', '30 horas de batería', 'Carga rápida USB-C', 'Conectividad Bluetooth 5.3', 'Códecs: AAC, LDAC', 'Resistencia IPX4']
+            }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id') || 'smartphone-pro-x';
+        const product = products[productId];
+
+        if (product) {
+            document.getElementById('productDetail').innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h1>${product.name}</h1>
+                    <div class="price">$${product.price}</div>
+                    <p>${product.description}</p>
+                    <button class="btn-primary" onclick="addToCart('${productId}', '${product.name}', ${product.price})">Agregar al carrito</button>
+                    <button class="btn-secondary" onclick="history.back()">← Volver</button>
+                    <div class="specs">
+                        <h3>Especificaciones</h3>
+                        <ul>${product.specs.map(s => `<li>✓ ${s}</li>`).join('')}</ul>
+                    </div>
+                </div>
+            `;
+
+            // Data Layer: view_item
+            dataLayer.push({
+                event: 'view_item',
+                ecommerce: {
+                    items: [{
+                        item_id: productId,
+                        item_name: product.name,
+                        price: product.price
+                    }],
+                    value: product.price,
+                    currency: 'USD'
+                }
+            });
+        }
+
+        // Data Layer: page_view
+        dataLayer.push({
+            event: 'page_view',
+            page_type: 'product_detail',
+            page_title: document.title,
+            page_location: window.location.href,
+            product_id: productId,
+            product_name: product ? product.name : 'unknown'
+        });
+
+        function addToCart(productId, productName, price) {
+            dataLayer.push({
+                event: 'add_to_cart',
+                ecommerce: {
+                    items: [{
+                        item_id: productId,
+                        item_name: productName,
+                        price: price,
+                        quantity: 1
+                    }],
+                    value: price,
+                    currency: 'USD'
+                }
+            });
+            alert(productName + ' agregado al carrito!');
+        }
+    </script>
+</body>
+</html>
